@@ -1,0 +1,9 @@
+try (Connection conn = DBConnection.getConnection()) {
+    String sql = "CREATE TABLE IF NOT EXISTS users ("
+               + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+               + "username TEXT NOT NULL UNIQUE, "
+               + "password TEXT NOT NULL)";
+    conn.createStatement().execute(sql);
+} catch (Exception e) {
+    e.printStackTrace();
+}
