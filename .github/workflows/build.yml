@@ -2,8 +2,7 @@ name: Java CI with Docker
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
   build-and-deploy:
@@ -19,8 +18,8 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Compile Java files
-        run: javac -d out src/application/*.java
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
 
       - name: Build Docker image
         run: docker build -t saqeeb26191/task-manager .
