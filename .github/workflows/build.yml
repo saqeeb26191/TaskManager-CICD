@@ -3,34 +3,29 @@ name: Java CI with Docker
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: Set up Java
+      - name: Set up JDK
         uses: actions/setup-java@v3
         with:
+          distribution: 'temurin'  # ✅ Add this line (important!)
           java-version: '17'
 
-      - name: Compile Java
-        run: |
-          mkdir -p build
-          javac -d build src/application/*.java
+      - name: Build project using Maven
+        run: mvn clean install
 
-      - name: Build Docker Image
-        run: docker build -t taskmanager-app .
+      - name: Build Docker image
+        run: docker build -t saqeeb26191/task-manager .
 
-      - name: Login to Docker Hub
+      - name: Log in to DockerHub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      - name: Push Docker Image
-        run: |
-          docker tag taskmanager-app yourdockerhub/taskmanager-app
-          docker push yourdockerhub/taskmanager-app
+      - name: Push Docker image to DockerHub
+        run: docker push saqeeb26191/task-manager
