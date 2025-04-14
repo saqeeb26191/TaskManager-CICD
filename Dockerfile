@@ -1,4 +1,8 @@
 FROM openjdk:21
-COPY out /app
+
 WORKDIR /app
-CMD ["java", "application.Main"]
+
+COPY target/task-manager-1.0-SNAPSHOT.jar app.jar
+
+CMD ["java", "-jar", "app.jar"]
+
