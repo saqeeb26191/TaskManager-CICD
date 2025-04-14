@@ -1,9 +1,0 @@
-FROM openjdk:17-jdk
-
-WORKDIR /app
-
-COPY . /app
-
-RUN javac -d build src/application/*.java
-
-CMD ["java", "-cp", "build", "application.Main"]
